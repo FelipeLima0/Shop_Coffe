@@ -1,24 +1,16 @@
-import { useState } from "react";
 import { ButtonAdd, ButtonRemove, InputContainer, NumberInput } from "./styles";
+interface Props {
+  add(): void
+  remove(): void
+}
 
-export function InputNumber() {
-  const [coffes, setCoffes] = useState(0);
-
-  const addCoffe = () => {
-    setCoffes(coffes + 1);
-  };
-
-  const removeCoffe = () => {
-    if (coffes > 0) {
-      setCoffes(coffes - 1);
-    }
-  };
-
+export function InputNumber({add, remove }:Props) {
+  
   return (
     <InputContainer>
-      <ButtonRemove onClick={removeCoffe}>-</ButtonRemove>
-      <NumberInput>{coffes}</NumberInput>
-      <ButtonAdd onClick={addCoffe}>+</ButtonAdd>
+      <ButtonRemove onClick={remove}>-</ButtonRemove>
+      <NumberInput>{}</NumberInput>
+      <ButtonAdd onClick={add}>+</ButtonAdd>
     </InputContainer>
   );
 }

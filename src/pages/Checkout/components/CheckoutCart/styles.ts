@@ -7,6 +7,7 @@ export const CardCheckContainer = styled.div`
   padding-bottom: ${pixToRem(24)};
   border-bottom: 1px solid ${props => props.theme["base-button"]};
   width: ${pixToRem(368)};
+  flex-direction: column;
 
   /* padding: ; */
 `;
@@ -24,6 +25,7 @@ export const SpanTitle = styled.span`
   display: flex;
   gap: ${pixToRem(73)};
   margin-bottom: ${pixToRem(8)};
+  justify-content: space-between;
 `;  
 
 export const ExpressTitle = styled.p`

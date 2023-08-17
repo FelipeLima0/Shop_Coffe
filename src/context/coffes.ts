@@ -1,5 +1,3 @@
-import { ReactNode, createContext } from "react";
-
 import Cofe1 from "../assets/Type=Expresso.svg";
 import Cofe2 from "../assets/Type=Americano.svg";
 import Cofe3 from "../assets/Type=Expresso Cremoso.svg";
@@ -15,10 +13,9 @@ import Cofe12 from "../assets/Type=Havaiano.svg";
 import Cofe13 from "../assets/Type=Árabe.svg";
 import Cofe14 from "../assets/Type=Irlandês.svg";
 
-
-const cafes = [
+export const coffesList = [
   { 
-    id: 1,
+    id: '1',
     image: Cofe1,
     title: "Expresso Tradicional",
     tag: ["TRADICIONAL"],
@@ -26,7 +23,7 @@ const cafes = [
     valueCoffe: 9.90,
   },
   { 
-    id: 2,
+    id: '2',
     image: Cofe2,
     title: "Expresso Americano",
     tag: ["TRADICIONAL"],
@@ -34,7 +31,7 @@ const cafes = [
     valueCoffe: 9.90
   },
   { 
-    id: 3,
+    id:  '3',
     image: Cofe3,
     title: "Expresso Cremoso",
     tag: ["TRADICIONAL"],
@@ -42,7 +39,7 @@ const cafes = [
     valueCoffe: 9.90
   },
   { 
-    id: 4,
+    id: '4',
     image: Cofe4,
     title: "Expresso Gelado",
     tag: ["TRADICIONAL", "GELADO"],
@@ -50,7 +47,7 @@ const cafes = [
     valueCoffe: 9.90
   },
   { 
-    id: 5,
+    id: '5',
     image: Cofe5,
     title: "Café com Leite",
     tag: ["TRADICIONAL", "COM LEITE"],
@@ -58,7 +55,7 @@ const cafes = [
     valueCoffe: 9.90
   },
   { 
-    id: 6,
+    id: '6',
     image: Cofe6,
     title: "Latte",
     tag: ["TRADICIONAL", "COM LEITE"],
@@ -66,7 +63,7 @@ const cafes = [
     valueCoffe: 9.90
   },
   { 
-    id: 7,
+    id: '7',
     image: Cofe7,
     title: "Capuccino",
     tag: ["TRADICIONAL", "COM LEITE"],
@@ -74,7 +71,7 @@ const cafes = [
     valueCoffe: 9.90
   },
   { 
-    id: 8,
+    id: '8',
     image: Cofe8,
     title: "Macchiato",
     tag: ["TRADICIONAL", "COM LEITE"],
@@ -82,7 +79,7 @@ const cafes = [
     valueCoffe: 9.90
   },
   { 
-    id: 9,
+    id: '9',
     image: Cofe9,
     title: "Mocaccino",
     tag: ["TRADICIONAL", "COM LEITE"],
@@ -98,7 +95,7 @@ const cafes = [
     valueCoffe: 9.90
   },
   { 
-    id: 11,
+    id: '11',
     image: Cofe11,
     title: "Cubano",
     tag: ["ESPECIAL", "ALCOOLICO", "GELADO"],
@@ -106,7 +103,7 @@ const cafes = [
     valueCoffe: 9.90
   },
   { 
-    id: 12,
+    id: '12',
     image: Cofe12,
     title: "Havaiano",
     tag: ["ESPECIAL"],
@@ -114,7 +111,7 @@ const cafes = [
     valueCoffe: 9.90
   },
   { 
-    id: 13,
+    id: '13',
     image: Cofe13,
     title: "Árabe",
     tag: ["ESPECIAL"],
@@ -122,7 +119,7 @@ const cafes = [
     valueCoffe: 9.90
   },
   { 
-    id: 14,
+    id: '14',
     image: Cofe14,
     title: "Irlandês",
     tag: ["ESPECIAL", "ALCOOLICO"],
@@ -130,41 +127,3 @@ const cafes = [
     valueCoffe: 9.90
   },
 ];
-
-export interface CoffesProps {
-  cafes: {
-    id: number
-    image: string;
-    title: string;
-    tag: string[];
-    info: string;
-    valueCoffe: number;
-  }[];
-}
-
-interface CoffeContextProviderProps {
-  children: ReactNode;
-  cafes: CoffesProps;
-}
-
-export const CoffesContext = createContext({} as CoffesProps);
-
-function addCoffe({cafes}:CoffesProps) {
-    const coffes = cafes
-
-    const coffesId = coffes.find(() => cafes.id === id)
-}
-
-
-export function CoffesContextProvider({ children }: CoffeContextProviderProps) {
-
-  return (
-    <CoffesContext.Provider
-      value={{
-        cafes,
-      }}
-    >
-      {children}
-    </CoffesContext.Provider>
-  );
-}

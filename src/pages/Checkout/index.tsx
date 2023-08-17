@@ -36,9 +36,13 @@ import Bank from "../../assets/bank.svg";
 import Cartao from "../../assets/cartao.svg";
 import { CheckoutCard } from "./components/CheckoutCart";
 import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { CoffesContext } from "../../context";
 
 export function Checkout() {
   
+  const {  total, totalCoffes } = useContext(CoffesContext)
+
   return (
     <CheckoutContainer>
       <LeftContainer>
@@ -99,7 +103,7 @@ export function Checkout() {
           <CheckoutValues>
             <TotalItensValues>
               <tr>Total de itens</tr>
-              <td>R$ 29,70</td>
+              <td>R$ {totalCoffes}</td>
             </TotalItensValues>
             <EntregaValue>
               <tr>Entrega</tr>
@@ -107,7 +111,7 @@ export function Checkout() {
             </EntregaValue>
             <TotalValue>
               <th>Total</th>
-              <th>R$ 33,70</th>
+              <th>R$ {total}</th>
             </TotalValue>
           </CheckoutValues>
           <NavLink to="/sucess">
