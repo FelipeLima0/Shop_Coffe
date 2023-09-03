@@ -7,7 +7,6 @@ export const CardCheckContainer = styled.div`
   padding-bottom: ${pixToRem(24)};
   border-bottom: 1px solid ${props => props.theme["base-button"]};
   width: ${pixToRem(368)};
-  flex-direction: column;
 
   /* padding: ; */
 `;
@@ -18,6 +17,7 @@ export const ImageCoffe = styled.img`
 `;
 
 export const SubContainerCardCheck = styled.div`
+
 
 `;
 

@@ -1,9 +1,13 @@
 import Lixo from "../../../../assets/lixo.svg";
 import { ButtonRemoveContainer } from "./styles";
 
-export function ButtonRemove() {
+interface Props {
+  remove(): void;
+}
+
+export function ButtonRemove({ remove }: Props) {
   return (
-    <ButtonRemoveContainer>
+    <ButtonRemoveContainer onClick={remove}>
       <span>
         <img src={Lixo} alt="" />
       </span>

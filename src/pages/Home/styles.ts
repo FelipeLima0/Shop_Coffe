@@ -50,7 +50,6 @@ export const LeftHome = styled.div`
     font-size: 16px;
     font-weight: 130%;
     color: ${(props) => props.theme["base-text"]};
-    
   }
 `;
 
@@ -78,6 +77,3 @@ export const CirclePurple = styled(BaseCircle)`
   border: 6px solid ${(props) => props.theme["purple"]};
   background: ${(props) => props.theme["purple"]};
 `;
-
-
-

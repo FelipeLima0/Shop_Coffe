@@ -1,15 +1,16 @@
 import { ButtonAdd, ButtonRemove, InputContainer, NumberInput } from "./styles";
 interface Props {
   add(): void
-  remove(): void
+  removeQuantity(): void
+  initialValue: number
 }
 
-export function InputNumber({add, remove }:Props) {
+export function InputNumber({add, removeQuantity, initialValue}:Props) {
   
   return (
     <InputContainer>
-      <ButtonRemove onClick={remove}>-</ButtonRemove>
-      <NumberInput>{}</NumberInput>
+      <ButtonRemove onClick={removeQuantity}>-</ButtonRemove>
+      <NumberInput>{initialValue}</NumberInput>
       <ButtonAdd onClick={add}>+</ButtonAdd>
     </InputContainer>
   );

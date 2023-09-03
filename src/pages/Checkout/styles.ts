@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { pixToRem } from "../../utils/pixToRem";
 
-export const CheckoutContainer = styled.div`
+export const CheckoutContainer = styled.form`
   margin-top: ${pixToRem(40)};
   display: flex;
   gap: ${pixToRem(32)};
@@ -16,7 +16,7 @@ export const BaseText = styled.span`
   font-weight: bold;
   position: relative;
   top: -1.7rem;
-  color: ${props => props.theme["base-subtitle"]};
+  color: ${(props) => props.theme["base-subtitle"]};
 `;
 
 export const LeftContainer = styled.div`
@@ -68,7 +68,7 @@ export const TypePagment = styled.div`
   justify-content: center;
   /* gap: 3rem; */
 
-  span {
+  button {
     display: flex;
     font-family: "Roboto", sans-serif;
     font-size: 12px;
@@ -149,13 +149,6 @@ export const BaseInputs = styled.input`
   }
 `;
 
-export const InputCep = styled(BaseInputs)`
-  grid-column-start: 1;
-  grid-column-end: 4;
-  width: ${pixToRem(200)};
-  height: ${pixToRem(42)};
-`;
-
 export const InputRua = styled(BaseInputs)`
   grid-column-start: 1;
   grid-column-end: 4;
@@ -168,7 +161,6 @@ export const InputNumero = styled(BaseInputs)`
   grid-column-end: 3;
   width: ${pixToRem(200)};
   height: ${pixToRem(42)};
-  
 `;
 
 export const InputComplemento = styled(BaseInputs)`
@@ -264,5 +256,4 @@ export const ButtonConfirm = styled.button`
 export const TextRight = styled(BaseText)`
   display: flex;
   justify-content: space-between;
-  
 `;

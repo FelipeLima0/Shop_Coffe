@@ -7,7 +7,6 @@ import {
   FirstText,
   FormCheckContainer,
   InputBairro,
-  InputCep,
   InputCidade,
   InputComplemento,
   InputNumero,
@@ -29,22 +28,63 @@ import {
   TwoText,
   TypePagment,
 } from "./styles";
+import styles from "./styles.module.css"
+
 import Locate from "../../assets/Icon.svg";
 import Cifra from "../../assets/Icon CIfra.svg";
-import Money from "../../assets/Money.svg";
-import Bank from "../../assets/bank.svg";
-import Cartao from "../../assets/cartao.svg";
 import { CheckoutCard } from "./components/CheckoutCart";
 import { NavLink } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CoffesContext } from "../../context";
+import { buttonsPayment } from "./components/ButtonPayment";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { PatternFormat } from "react-number-format";
+import { pixToRem } from "../../utils/pixToRem";
 
 export function Checkout() {
+  const createOrderFormSchema = z.object({
+    cep: z.string()
+      .min(8),
+    rua: z.string()
+      .min(1),
+    numero: z.string()
+      .nonempty(),
+    complemento: z.string()
+      ,
+    bairro: z.string()
+      .nonempty(),
+    cidade: z.string()
+      .nonempty(),
+    uf: z.string()
+      .nonempty(),
+    pagament: z.string()  
+  });
+
+  const { register, handleSubmit } = useForm({
+    resolver: zodResolver(createOrderFormSchema),
+  });
+
+  const { total, totalCoffes } = useContext(CoffesContext);
+  const [buttonSel, setButtonSel] = useState(null);
+
+  const [output, setOutput] = useState("");
+
   
-  const {  total, totalCoffes } = useContext(CoffesContext)
+
+  console.log('aqui esta o valor do button', buttonSel)
+
+  function formValidation(data: any) {
+    setOutput(JSON.stringify(data, null, 2));
+  }
+
+  const handleButtonSel = (index: number) => {
+    setButtonSel(index);
+  };
 
   return (
-    <CheckoutContainer>
+    <CheckoutContainer onSubmit={handleSubmit(formValidation)}>
       <LeftContainer>
         <TextLeft>Complete o pedido</TextLeft>
         <LeftSubContainer>
@@ -58,14 +98,47 @@ export function Checkout() {
                 </TwoText>
               </tbody>
             </AndressAttention>
-            <InputsContainer action="">
-              <InputCep type="number" placeholder="CEP" />
-              <InputRua type="text" placeholder="Rua" />
-              <InputNumero type="number" placeholder="Numero" />
-              <InputComplemento type="text" placeholder="Complemento" />
-              <InputBairro type="text" placeholder="Bairro" />
-              <InputCidade type="text" placeholder="Cidade" />
-              <InputUF type="text" placeholder="UF" />
+            <InputsContainer>
+              <PatternFormat 
+              className={styles.inputCep}
+                required 
+                placeholder="CEP" 
+                {...register("cep")} 
+                format="#####-###"
+                mask={"_"}
+                />
+                
+              <InputRua 
+                type="text" 
+                placeholder="Rua" 
+                {...register("rua")} 
+                />
+              <InputNumero
+                type="number"
+                placeholder="Numero"
+                {...register("numero")}
+              />
+              <InputComplemento
+                type="text"
+                placeholder="Complemento"
+                {...register("complemento")}
+              />
+              <InputBairro
+                type="text"
+                placeholder="Bairro"
+                {...register("bairro")}
+              />
+              <InputCidade
+                type="text"
+                placeholder="Cidade"
+                {...register("cidade")}
+              />
+              <InputUF 
+                type="text" 
+                placeholder="UF" 
+                {...register("uf")} 
+                maxLength={2}
+                />
             </InputsContainer>
           </FormCheckContainer>
         </LeftSubContainer>
@@ -80,24 +153,32 @@ export function Checkout() {
             </SecondText>
           </TextPagment>
           <TypePagment>
-            <span>
-              <img src={Cartao} alt="" />
-              <p>Cartão de crédito</p>
-            </span>
-            <span>
-              <img src={Bank} alt="" />
-              <p>cartão de débito</p>
-            </span>
-            <span>
-              <img src={Money} alt="" />
-              <p>dinheiro</p>
-            </span>
+            {buttonsPayment.map((button, index) => {
+              const color = index === buttonSel ? "#dcd1f7" : null;
+              // const colorBorder = index === buttonSel ? "#4B2995" : "none";
+
+              return (
+                <button 
+                  type="button"
+                  style={{
+                    background: color,
+                    // border: `3px solid ${colorBorder}`,
+                  }}
+                  key={index}
+                  onClick={() => handleButtonSel(index)}
+                  {...register('pagament')}
+                >
+                  <img src={button.image} alt="" />
+                  <p>{button.title}</p>
+                </button>
+              );
+            })}
           </TypePagment>
         </LeftFooterContainer>
       </LeftContainer>
 
       <RightContainer>
-          <TextRight>Cafés selecionados</TextRight>
+        <TextRight>Cafés selecionados</TextRight>
         <RightSubContainer>
           <CheckoutCard />
           <CheckoutValues>
@@ -111,12 +192,13 @@ export function Checkout() {
             </EntregaValue>
             <TotalValue>
               <th>Total</th>
-              <th>R$ {total}</th>
+              <th>{total}</th>
             </TotalValue>
           </CheckoutValues>
           <NavLink to="/sucess">
-            <ButtonConfirm>CONFIRMAR PEDIDO</ButtonConfirm>
+          <ButtonConfirm type="submit">CONFIRMAR PEDIDO</ButtonConfirm>
           </NavLink>
+          <pre>{output}</pre>
         </RightSubContainer>
       </RightContainer>
     </CheckoutContainer>

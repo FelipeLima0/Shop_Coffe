@@ -12,6 +12,7 @@ export interface Coffe {
   tag: string[];
   info: string;
   valueCoffe: number;
+  quantity: number;
 }
 
 export interface CoffeContext {
@@ -27,7 +28,8 @@ export interface CoffeContext {
 interface ContextProps {
   add(id: string): void;
   removeQuantity(id: string): void;
-  listAll: Coffe[];
+  remove(id: string): void;
+  listAll: CoffeContext[];
   menu: Coffe[];
   totalCoffes: number;
   total: number;
@@ -36,6 +38,7 @@ interface ContextProps {
 export const CoffesContext = createContext<ContextProps>({
   add: () => {},
   removeQuantity: () => {},
+  remove: () => {},
   listAll: [],
   menu: [],
   totalCoffes: 0,
@@ -44,10 +47,7 @@ export const CoffesContext = createContext<ContextProps>({
 
 export const CoffesProvider = ({ children }: CoffesProviderProps) => {
   const [coffes, setCoffes] = useState<CoffeContext[]>([]);
-  const menu = coffesList as Coffe[];
-
-  console.log("cart", JSON.stringify(coffes, null, 2));
-  console.log("cart total items", coffes.length);
+  const [menu, setMenu] = useState<Coffe[]>(coffesList as Coffe[]);
 
   function add(id: string) {
     const coffeInMenu = menu.find((item) => item.id === id);
@@ -57,6 +57,9 @@ export const CoffesProvider = ({ children }: CoffesProviderProps) => {
     if (coffeIndex >= 0) {
       coffes[coffeIndex].quantity = coffes[coffeIndex].quantity + 1;
       setCoffes([...coffes]);
+
+      coffeInMenu.quantity++;
+      setMenu([...menu]);
 
       return;
     }
@@ -68,18 +71,26 @@ export const CoffesProvider = ({ children }: CoffesProviderProps) => {
         quantity: 1,
       },
     ]);
+
+    coffeInMenu.quantity++;
+    setMenu([...menu]);
   }
 
   function removeQuantity(id: string) {
     const coffeIndex = coffes.findIndex((item) => item.id === id);
+    const coffeInMenu = menu.find((item) => item.id === id);
 
-    if (coffeIndex < 0) return [];
+    if (coffeIndex < 0) return;
 
     const coffeQuantity = coffes[coffeIndex].quantity;
 
     if (coffeQuantity > 1) {
       coffes[coffeIndex].quantity = coffes[coffeIndex].quantity - 1;
       setCoffes([...coffes]);
+
+      coffeInMenu.quantity--;
+      setMenu([...menu]);
+
       return;
     }
 
@@ -92,11 +103,13 @@ export const CoffesProvider = ({ children }: CoffesProviderProps) => {
 
       return coffe;
     });
-  }
 
-  // function listAll(){
-  //   return coffes
-  // }
+    setMenu((coffes) => {
+      const coffe = coffes.find((item) => item.id === id);
+      coffe.quantity = 0;
+      return [...coffes, coffe];
+    });
+  }
 
   const totalCoffes = coffes.reduce((acc, curr) => {
     const coffePrice = curr.valueCoffe * curr.quantity;
@@ -105,15 +118,32 @@ export const CoffesProvider = ({ children }: CoffesProviderProps) => {
     return parseFloat(total.toFixed(4));
   }, 0);
 
-  const total = parseFloat(totalCoffes + (3.5).toFixed(4));
+  const formatter = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
-  console.log("aqui o valor do cafe", totalCoffes);
+  const a = totalCoffes + 3.5;
+
+  const total: any = formatter.format(a);
+
 
   return (
     <CoffesContext.Provider
-      value={{ add, removeQuantity, menu, totalCoffes, total, listAll: coffes }}
+      value={{
+        remove,
+        add,
+        removeQuantity,
+        menu,
+        totalCoffes,
+        total,
+        listAll: coffes,
+      }}
     >
       {children}
     </CoffesContext.Provider>
   );
 };
+
+// react-number-format
+// Array.from({ length: 3 }).map((_, index) => {}

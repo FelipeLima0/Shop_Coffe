@@ -14,7 +14,7 @@ import { useContext } from "react";
 import { CoffesContext } from "../../../../context";
 
 export function CheckoutCard() {
-  const { listAll, add, removeQuantity } = useContext(CoffesContext);
+  const { listAll, add, removeQuantity, remove } = useContext(CoffesContext);
 
   function handleAdd(id: string) {
     add(id);
@@ -24,25 +24,38 @@ export function CheckoutCard() {
     removeQuantity(id);
   }
 
+  function handleRemoveTotal(id: string) {
+    remove(id);
+  }
+
+  const formatter = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
   return (
     <CardCheckContainer>
       {listAll.map((cafe) => (
-        <>
-          <ImageCoffe src={cafe.image} alt="" />
-          <SubContainerCardCheck>
-            <SpanTitle>
-              <ExpressTitle>{cafe.title}</ExpressTitle>
-              <ExpressValue>R$ {cafe.valueCoffe}</ExpressValue>
-            </SpanTitle>
-            <ButtonCheck>
-              <InputNumber
-                add={() => handleAdd(cafe.id)}
-                remove={() => handleRemove(cafe.id)}
-              />
-              <ButtonRemove />
-            </ButtonCheck>
-          </SubContainerCardCheck>
+        
+          <>
+          
+            <ImageCoffe src={cafe.image} alt="" />
+            <SubContainerCardCheck>
+              <SpanTitle>
+                <ExpressTitle>{cafe.title}</ExpressTitle>
+                <ExpressValue>{formatter.format(cafe.valueCoffe)}</ExpressValue>
+              </SpanTitle>
+              <ButtonCheck>
+                <InputNumber
+                  add={() => handleAdd(cafe.id)}
+                  removeQuantity={() => handleRemove(cafe.id)}
+                  initialValue={cafe.quantity}
+                  />
+                <ButtonRemove remove={() => handleRemoveTotal(cafe.id)} />
+              </ButtonCheck>
+            </SubContainerCardCheck>
+          
         </>
+     
       ))}
     </CardCheckContainer>
   );
