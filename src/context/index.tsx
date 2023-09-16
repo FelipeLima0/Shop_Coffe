@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import { coffesList } from "./coffes";
+import { FormState, initialFormState } from "../pages/Checkout";
 
 interface CoffesProviderProps {
   children: React.ReactNode;
@@ -33,21 +34,33 @@ interface ContextProps {
   menu: Coffe[];
   totalCoffes: number;
   total: number;
+  setFormValueState(data: FormState): void;
+  formValueState: FormState
+  setButtonSel(index:number): void
+  buttonSel: any
 }
 
-export const CoffesContext = createContext<ContextProps>({
-  add: () => {},
-  removeQuantity: () => {},
-  remove: () => {},
-  listAll: [],
-  menu: [],
-  totalCoffes: 0,
-  total: 3.5,
-});
+export const CoffesContext = createContext<ContextProps>({} as ContextProps);
+
+//   add: () => {},
+//   removeQuantity: () => {},
+//   remove: () => {},
+//   listAll: [],
+//   menu: [],
+//   totalCoffes: 0,
+//   total: 3.5,
+//   setFormValueState: () => {},
+//   formValueState: () => {}
 
 export const CoffesProvider = ({ children }: CoffesProviderProps) => {
   const [coffes, setCoffes] = useState<CoffeContext[]>([]);
   const [menu, setMenu] = useState<Coffe[]>(coffesList as Coffe[]);
+  const [formValueState, setFormValueState] =
+    useState<FormState>(initialFormState);
+
+    const [buttonSel, setButtonSel] = useState(null);  
+
+   
 
   function add(id: string) {
     const coffeInMenu = menu.find((item) => item.id === id);
@@ -127,7 +140,6 @@ export const CoffesProvider = ({ children }: CoffesProviderProps) => {
 
   const total: any = formatter.format(a);
 
-
   return (
     <CoffesContext.Provider
       value={{
@@ -138,6 +150,10 @@ export const CoffesProvider = ({ children }: CoffesProviderProps) => {
         totalCoffes,
         total,
         listAll: coffes,
+        setFormValueState,
+        formValueState,
+        setButtonSel,
+        buttonSel
       }}
     >
       {children}
@@ -147,3 +163,6 @@ export const CoffesProvider = ({ children }: CoffesProviderProps) => {
 
 // react-number-format
 // Array.from({ length: 3 }).map((_, index) => {}
+// selecionar palavra e control + D 
+//biblioteca de components
+

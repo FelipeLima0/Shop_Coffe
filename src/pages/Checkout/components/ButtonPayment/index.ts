@@ -2,6 +2,7 @@ import credito from "../../../../assets/cartao.svg";
 import debito from "../../../../assets/bank.svg";
 import dinheiro from "../../../../assets/Money.svg";
 
+
 export const buttonsPayment = [
   {
     image: credito,

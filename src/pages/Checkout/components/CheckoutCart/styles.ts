@@ -1,12 +1,19 @@
 import styled from "styled-components";
 import { pixToRem } from "../../../../utils/pixToRem";
 
+export const FlexItens = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
 export const CardCheckContainer = styled.div`
   display: flex;
+  /* flex-direction: column; */
   margin-bottom: ${pixToRem(24)};
   padding-bottom: ${pixToRem(24)};
   border-bottom: 1px solid ${props => props.theme["base-button"]};
   width: ${pixToRem(368)};
+
 
   /* padding: ; */
 `;

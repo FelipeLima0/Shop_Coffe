@@ -5,6 +5,7 @@ import {
   CardCheckContainer,
   ExpressTitle,
   ExpressValue,
+  FlexItens,
   ImageCoffe,
   SpanTitle,
   SubContainerCardCheck,
@@ -33,11 +34,10 @@ export function CheckoutCard() {
     currency: "BRL",
   });
   return (
-    <CardCheckContainer>
+    <FlexItens>
       {listAll.map((cafe) => (
-        
-          <>
-          
+        <>
+          <CardCheckContainer>
             <ImageCoffe src={cafe.image} alt="" />
             <SubContainerCardCheck>
               <SpanTitle>
@@ -49,14 +49,13 @@ export function CheckoutCard() {
                   add={() => handleAdd(cafe.id)}
                   removeQuantity={() => handleRemove(cafe.id)}
                   initialValue={cafe.quantity}
-                  />
+                />
                 <ButtonRemove remove={() => handleRemoveTotal(cafe.id)} />
               </ButtonCheck>
             </SubContainerCardCheck>
-          
+          </CardCheckContainer>
         </>
-     
       ))}
-    </CardCheckContainer>
+    </FlexItens>
   );
 }

@@ -26,7 +26,7 @@ export function Cards() {
   function handleRemove(id: string) {
     removeQuantity(id);
   }
-  console.log("aqui esta o meu", menu);
+
   return (
     <CatalogCoffe>
       {menu.map((coffe) => (

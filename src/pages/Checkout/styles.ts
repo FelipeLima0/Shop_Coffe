@@ -123,7 +123,7 @@ export const TwoText = styled.p`
   color: ${(props) => props.theme["base-text"]};
 `;
 
-export const InputsContainer = styled.form`
+export const InputsContainer = styled.div`
   display: grid;
   grid-template-columns: 4rem 4rem 4rem;
   gap: 0.2rem;

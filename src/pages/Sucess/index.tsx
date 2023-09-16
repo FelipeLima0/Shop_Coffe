@@ -2,9 +2,42 @@ import Local from "../../assets/LocalSucess.svg";
 import TimeSucess from "../../assets/TimeSucess.svg";
 import CifraSucess from "../../assets/CifraSucess.svg";
 import Ilustracao from "../../assets/Illustration.svg";
-import { CifraInfo, ContainerInfo, LeftContainer, LocalInfo, RightContainer, SucessContainer, TimeInfo, TitleH1, TitleP, TitleSucess } from "./styles";
+import {
+  CifraInfo,
+  ContainerInfo,
+  LeftContainer,
+  LocalInfo,
+  RightContainer,
+  SucessContainer,
+  TimeInfo,
+  TitleH1,
+  TitleP,
+  TitleSucess,
+} from "./styles";
+import { PropsSucess } from "../Checkout";
+import { useContext, useEffect } from "react";
+import { CoffesContext } from "../../context";
+
+
 
 export function Sucess() {
+  const { formValueState, buttonSel } = useContext(CoffesContext);
+
+  let payments: string
+
+  if (buttonSel === 0) {
+    payments = "Cartão de crédito";
+  } else if (buttonSel === 1) {
+    payments = "Cartão de débito";
+  } else if (buttonSel === 2) {
+    payments = "Dinheiro";
+  }
+  
+  
+  
+
+  
+
   return (
     <SucessContainer>
       <LeftContainer>
@@ -16,8 +49,8 @@ export function Sucess() {
           <LocalInfo>
             <img src={Local} alt="" />
             <p>
-              Entrega em Rua <strong>João Daniel Martinelli</strong>, <strong>102</strong> Farrapos - Porto Alegre,
-              RS
+              Entrega em Rua <strong>{formValueState.rua}</strong>,
+              <strong>{formValueState.numero}</strong> {formValueState.cidade} - {formValueState.bairro}
             </p>
           </LocalInfo>
           <TimeInfo>
@@ -31,7 +64,7 @@ export function Sucess() {
             <img src={CifraSucess} alt="" />
             <p>
               <tr>Pagamento na entrega</tr>
-              <th>Cartão de Crédito</th>
+              <th>{payments}</th>
             </p>
           </CifraInfo>
         </ContainerInfo>
